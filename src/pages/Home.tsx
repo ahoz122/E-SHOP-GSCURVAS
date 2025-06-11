@@ -7,20 +7,20 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative h-[60vh] bg-pink-100 overflow-hidden">
+      <section className="relative h-[60vh] md:h-[70vh] bg-pink-100 overflow-hidden z-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center"
+          className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center relative z-10"
         >
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 mb-4">
             Moldea tu figura
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl">
             Descubre nuestra colección de fajas y cinturillas de alta calidad
           </p>
-          <button className="bg-pink-500 text-white px-8 py-3 rounded-full hover:bg-pink-600 transition-colors">
+          <button className="bg-pink-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-pink-600 transition-colors text-sm sm:text-base">
             Ver Colección
           </button>
         </motion.div>
