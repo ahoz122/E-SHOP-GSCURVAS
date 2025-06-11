@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiX, FiMinus, FiPlus, FiTrash2, FiSend } from 'react-icons/fi';
+import { FiX, FiMinus, FiPlus, FiTrash2, FiSend, FiCreditCard } from 'react-icons/fi';
 import { useCartStore } from '../../stores/cartStore';
 
 interface CartProps {
@@ -8,10 +8,25 @@ interface CartProps {
   onClose: () => void;
 }
 
+// URL de pruebas de Stripe Checkout
+const STRIPE_CHECKOUT_URL = 'https://buy.stripe.com/test_5kQcN7b4b9hG9YbcYr2B200';
+
 const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
   const { items, removeItem, updateQuantity, clearCart, sendToWhatsApp } = useCartStore();
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+  const handleStripePayment = () => {
+    setIsProcessing(true);
+    try {
+      // Redirigir directamente a la URL de pruebas de Stripe
+      window.location.href = STRIPE_CHECKOUT_URL;
+    } catch (error) {
+      console.error('Error al redirigir:', error);
+      setIsProcessing(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -96,23 +111,33 @@ const Cart: React.FC<CartProps> = ({ isOpen, onClose }) => {
               <span className="text-lg font-bold">${total.toFixed(2)}</span>
             </div>
             
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={clearCart}
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
+                >
+                  Limpiar
+                </button>
+                <button
+                  onClick={() => {
+                    sendToWhatsApp();
+                    onClose();
+                  }}
+                  disabled={items.length === 0}
+                  className="flex-1 bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  <FiSend size={18} />
+                  Enviar por WhatsApp
+                </button>
+              </div>
               <button
-                onClick={clearCart}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-full hover:bg-gray-50 transition-colors"
+                onClick={handleStripePayment}
+                disabled={items.length === 0 || isProcessing}
+                className="w-full px-4 py-2 bg-pink-600 text-white rounded-full hover:bg-pink-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Limpiar
-              </button>
-              <button
-                onClick={() => {
-                  sendToWhatsApp();
-                  onClose();
-                }}
-                disabled={items.length === 0}
-                className="flex-1 bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                <FiSend size={18} />
-                Enviar por WhatsApp
+                <FiCreditCard size={18} />
+                {isProcessing ? 'Procesando...' : 'Pagar con tarjeta'}
               </button>
             </div>
           </div>

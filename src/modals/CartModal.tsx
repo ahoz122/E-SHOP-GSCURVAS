@@ -3,8 +3,9 @@ import { Modal } from "../components/Modal";
 import { CartItem } from "../types/types";
 import SmNumberButton from "../components/SmNumberButton";
 import { useShopStore } from "../stores/shopStore";
-import { FaWhatsapp, FaTrash } from "react-icons/fa";
+import { FaWhatsapp, FaTrash, FaCreditCard } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface CartModalProps {
   isOpen: boolean;
@@ -206,24 +207,33 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                 </motion.span>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <motion.button
-                  className="px-4 py-2.5 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors text-gray-700 text-sm font-medium"
-                  onClick={clearCart}
-                  whileHover={{ backgroundColor: "#e5e7eb" }}
-                  whileTap={{ scale: 0.97 }}
+              <div className="flex flex-col gap-3">
+                <div className="grid grid-cols-2 gap-3">
+                  <motion.button
+                    className="px-4 py-2.5 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors text-gray-700 text-sm font-medium"
+                    onClick={clearCart}
+                    whileHover={{ backgroundColor: "#e5e7eb" }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    Limpiar
+                  </motion.button>
+                  <motion.button
+                    className="px-4 py-2.5 bg-[#155b51] rounded-md hover:bg-[#124a42] transition-colors text-white flex items-center justify-center gap-2 text-sm font-medium"
+                    onClick={handleWhatsappCheckout}
+                    disabled={cart.length === 0}
+                    whileHover={{ backgroundColor: "#124a42", scale: 1.01 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <FaWhatsapp size={18} /> WhatsApp
+                  </motion.button>
+                </div>
+                <Link
+                  to="/checkout"
+                  onClick={onClose}
+                  className="w-full px-4 py-2.5 bg-pink-600 rounded-md hover:bg-pink-700 transition-colors text-white flex items-center justify-center gap-2 text-sm font-medium"
                 >
-                  Vaciar carrito
-                </motion.button>
-                <motion.button
-                  className="px-4 py-2.5 bg-[#155b51] rounded-md hover:bg-[#124a42] transition-colors text-white flex items-center justify-center gap-2 text-sm font-medium"
-                  onClick={handleWhatsappCheckout}
-                  disabled={cart.length === 0}
-                  whileHover={{ backgroundColor: "#124a42", scale: 1.01 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <FaWhatsapp size={18} /> Completar compra
-                </motion.button>
+                  <FaCreditCard size={18} /> Pagar con tarjeta
+                </Link>
               </div>
             </motion.div>
           </motion.div>
