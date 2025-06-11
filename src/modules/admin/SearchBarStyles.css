@@ -1,0 +1,13 @@
+.custom-search-input {
+  border: none;
+  outline: none;
+  padding: 6px 0;
+  margin: 0;
+}
+
+.custom-search-input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+

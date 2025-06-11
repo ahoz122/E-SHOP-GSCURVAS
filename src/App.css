@@ -1,0 +1,35 @@
+@media (min-width: 1200px) {
+  .lg\:col-2-4 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .md\:col-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  .col-6 {
+    padding: 0.5rem !important;
+  }
+  
+  .p-card {
+    margin: 0 !important;
+  }
+}
+
+.main-content {
+  background-color: oklch(0.985 0.002 247.839);
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
+}
+
