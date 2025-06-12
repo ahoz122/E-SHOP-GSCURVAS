@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiHome, FiMaximize2, FiVideo, FiShoppingBag, FiShoppingCart, FiUser, FiLogOut } from 'react-icons/fi';
@@ -13,6 +13,7 @@ const Header: React.FC = () => {
   const items = useCartStore(state => state.items);
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const { user, logout } = useAuthStore();
+  const authMenuRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { path: '/', label: 'Inicio', icon: <FiHome /> },
@@ -29,6 +30,17 @@ const Header: React.FC = () => {
     await logout();
     setIsAuthMenuOpen(false);
   };
+
+  useEffect(() => {
+    if (!isAuthMenuOpen) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (authMenuRef.current && !authMenuRef.current.contains(event.target as Node)) {
+        setIsAuthMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isAuthMenuOpen]);
 
   return (
     <header className="bg-white shadow-sm">
@@ -92,7 +104,7 @@ const Header: React.FC = () => {
                 </AnimatePresence>
               </div>
 
-              <div className="relative">
+              <div className="relative" ref={authMenuRef}>
                 <button
                   onClick={handleAuthClick}
                   className="p-2 rounded-lg text-gray-600 hover:text-pink-600 hover:bg-pink-50 transition-colors"
@@ -107,7 +119,7 @@ const Header: React.FC = () => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute right-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-xl border border-gray-100"
+                      className="absolute right-0 mt-2 w-48 py-2 bg-white rounded-lg shadow-xl border border-gray-100 z-[120]"
                     >
                       {user ? (
                         <>

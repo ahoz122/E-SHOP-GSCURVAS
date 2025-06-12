@@ -1,29 +1,171 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from '../components/product/ProductCard';
 import { mockProducts } from '../data/mockProducts';
+import { FiArrowRight, FiArrowLeft } from 'react-icons/fi';
+
+const slides = [
+  {
+    title: "Moldea tu figura",
+    subtitle: "Descubre nuestra colección de fajas y cinturillas de alta calidad",
+    image: "/assets/hero1.jpg",
+  },
+  {
+    title: "Confort y Estilo",
+    subtitle: "Diseños ergonómicos que se adaptan a tu cuerpo",
+    image: "/assets/hero2.jpg",
+  },
+  {
+    title: "Resultados Visibles",
+    subtitle: "Transforma tu silueta con nuestras prendas modeladoras",
+    image: "/assets/hero3.jpg",
+  }
+];
 
 const Home: React.FC = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDirection(1);
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const slideVariants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0
+    })
+  };
+
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
+
+  const paginate = (newDirection: number) => {
+    setDirection(newDirection);
+    setCurrentSlide((prev) => (prev + newDirection + slides.length) % slides.length);
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[60vh] md:h-[70vh] bg-pink-100 overflow-hidden z-0">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center relative z-10"
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 mb-4">
-            Moldea tu figura
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl">
-            Descubre nuestra colección de fajas y cinturillas de alta calidad
-          </p>
-          <button className="bg-pink-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full hover:bg-pink-600 transition-colors text-sm sm:text-base">
-            Ver Colección
-          </button>
-        </motion.div>
+      <section className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 relative z-0">
+        <div className="relative h-[65vh] md:h-[75vh] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] bg-gradient-to-r from-neutral-100 to-white transform hover:shadow-[0_20px_70px_rgba(8,_112,_184,_0.15)] transition-all duration-300">
+          <AnimatePresence initial={false} custom={direction}>
+            <motion.div
+              key={currentSlide}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 }
+              }}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={1}
+              onDragEnd={(e, { offset, velocity }) => {
+                const swipe = swipePower(offset.x, velocity.x);
+
+                if (swipe < -swipeConfidenceThreshold) {
+                  paginate(1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(-1);
+                }
+              }}
+              className="absolute inset-0 rounded-3xl overflow-hidden"
+            >
+              <div 
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-3xl transform hover:scale-105 transition-transform duration-3000"
+                style={{ 
+                  backgroundImage: `url(${slides[currentSlide].image})`,
+                  filter: 'brightness(0.9)'
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent rounded-3xl backdrop-blur-[2px]" />
+              
+              <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center relative">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]"
+                >
+                  {slides[currentSlide].title}
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-lg sm:text-xl md:text-2xl text-white/90 mb-10 max-w-3xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+                >
+                  {slides[currentSlide].subtitle}
+                </motion.p>
+                <motion.button
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-white/90 backdrop-blur-sm text-gray-800 px-10 py-4 rounded-full text-lg font-medium hover:bg-white transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] transform"
+                >
+                  Ver Colección
+                </motion.button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Navigation Arrows */}
+          <div className="absolute inset-x-0 bottom-0 top-0 flex items-center justify-between px-6 sm:px-8 pointer-events-none">
+            <button
+              className="p-4 rounded-full bg-white/30 backdrop-blur-sm text-gray-800 hover:bg-white/50 transition-all duration-300 pointer-events-auto shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] hover:-translate-x-1"
+              onClick={() => paginate(-1)}
+            >
+              <FiArrowLeft size={24} />
+            </button>
+            <button
+              className="p-4 rounded-full bg-white/30 backdrop-blur-sm text-gray-800 hover:bg-white/50 transition-all duration-300 pointer-events-auto shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] hover:translate-x-1"
+              onClick={() => paginate(1)}
+            >
+              <FiArrowRight size={24} />
+            </button>
+          </div>
+
+          {/* Dots Indicator */}
+          <div className="absolute bottom-8 inset-x-0 flex justify-center gap-3">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setDirection(index > currentSlide ? 1 : -1);
+                  setCurrentSlide(index);
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${
+                  index === currentSlide 
+                    ? 'bg-white w-8 shadow-[0_2px_8px_rgba(255,255,255,0.4)]' 
+                    : 'bg-white/50 hover:bg-white/75 hover:shadow-[0_2px_8px_rgba(255,255,255,0.2)]'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Featured Products */}

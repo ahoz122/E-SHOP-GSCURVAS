@@ -117,7 +117,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-white flex items-center justify-center p-4 fixed inset-0 z-50">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-white flex items-center justify-center p-4 fixed inset-0 z-[100]">
       <motion.div
         initial="hidden"
         animate="visible"
