@@ -4,15 +4,24 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  User,
   signInWithPopup,
   GoogleAuthProvider
 } from 'firebase/auth';
 import { FirebaseError } from 'firebase/app';
 import { auth } from '../config/firebase';
 
+// Definición de tipo de usuario personalizado para el store
+export interface AppUser {
+  displayName?: string | null;
+  email?: string | null;
+  photoURL?: string | null;
+  emailVerified?: boolean;
+  createdAt?: string;
+  uid?: string;
+}
+
 interface AuthStore {
-  user: User | null;
+  user: AppUser | null;
   loading: boolean;
   error: string | null;
   signIn: (email: string, password: string) => Promise<void>;
@@ -31,7 +40,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       set({ loading: true, error: null });
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      set({ user: userCredential.user, loading: false });
+      set({ user: normalizeUser(userCredential.user), loading: false });
     } catch (error) {
       console.error('Error en signIn:', error);
       set({ error: (error as Error).message, loading: false });
@@ -42,7 +51,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
     try {
       set({ loading: true, error: null });
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      set({ user: userCredential.user, loading: false });
+      set({ user: normalizeUser(userCredential.user), loading: false });
     } catch (error) {
       console.error('Error en signUp:', error);
       set({ error: (error as Error).message, loading: false });
@@ -71,7 +80,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         email: userCredential.user.email
       });
       
-      set({ user: userCredential.user, loading: false });
+      set({ user: normalizeUser(userCredential.user), loading: false });
     } catch (error) {
       console.error('Error en autenticación con Google:', error);
       
@@ -148,6 +157,19 @@ export const useAuthStore = create<AuthStore>((set) => ({
   clearError: () => set({ error: null })
 }));
 
+function normalizeUser(user: any) {
+  if (!user) return null;
+  return {
+    displayName: user.displayName,
+    email: user.email,
+    photoURL: user.photoURL || user.photoUrl,
+    emailVerified: user.emailVerified,
+    createdAt: user.createdAt,
+    uid: user.uid || user.localId,
+    // Puedes agregar más campos si los necesitas
+  };
+}
+
 // Listener para cambios en el estado de autenticación
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -157,5 +179,5 @@ onAuthStateChanged(auth, (user) => {
       proveedor: user.providerId
     });
   }
-  useAuthStore.setState({ user, loading: false });
+  useAuthStore.setState({ user: normalizeUser(user), loading: false });
 }); 

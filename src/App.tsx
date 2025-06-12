@@ -8,6 +8,7 @@ import ConsultationScheduler from './components/consultation/ConsultationSchedul
 import WhatsAppCatalog from './components/catalog/WhatsAppCatalog';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 import './App.css';
 
 const AppContent = () => {
@@ -25,6 +26,7 @@ const AppContent = () => {
           <Route path="/catalogo" element={<WhatsAppCatalog />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
       {!isAuthPage && <WhatsAppFloat />}

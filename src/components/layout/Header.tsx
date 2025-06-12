@@ -126,6 +126,13 @@ const Header: React.FC = () => {
                           <div className="px-4 py-2 text-sm text-gray-500 border-b border-gray-100">
                             {user.email}
                           </div>
+                          <Link
+                            to="/profile"
+                            className="block px-4 py-2 text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors"
+                            onClick={() => setIsAuthMenuOpen(false)}
+                          >
+                            Mi Perfil
+                          </Link>
                           <button
                             onClick={handleLogout}
                             className="w-full text-left px-4 py-2 text-gray-700 hover:bg-pink-50 hover:text-pink-600 transition-colors flex items-center gap-2"
