@@ -43,22 +43,25 @@ const Header: React.FC = () => {
   }, [isAuthMenuOpen]);
 
   return (
-    <header className="bg-white shadow-sm">
-      <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
-          <Link to="/" className="text-2xl font-bold text-pink-600">
-            Luxphes
-          </Link>
+    <header className="bg-white shadow-sm w-full border-b border-pink-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        <nav className="flex items-center justify-between h-20">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-pink-200 to-pink-400 shadow-lg mr-2">
+              <span className="text-white text-2xl font-black font-playfair">GS</span>
+            </div>
+            <span className="text-4xl font-black font-playfair tracking-wide text-pink-600 drop-shadow-sm select-none">GSCURVAS</span>
+          </div>
 
           <div className="flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative px-4 py-2 rounded-lg flex items-center gap-2 transition-colors
+                className={`relative px-6 py-2 rounded-lg flex items-center gap-2 transition-colors font-playfair text-xl tracking-wide
                   ${location.pathname === item.path
-                    ? 'text-pink-600'
-                    : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50'
+                    ? 'text-pink-600 font-black'
+                    : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50 font-semibold'
                   }`}
               >
                 {item.icon}
