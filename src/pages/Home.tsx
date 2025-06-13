@@ -62,10 +62,10 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="container mx-auto px-2 sm:px-4 py-4 sm:py-6 relative z-0">
-        <div className="relative h-[65vh] md:h-[75vh] overflow-hidden rounded-3xl shadow-[0_20px_50px_rgba(8,_112,_184,_0.1)] bg-gradient-to-r from-neutral-100 to-white transform hover:shadow-[0_20px_70px_rgba(8,_112,_184,_0.15)] transition-all duration-300">
+      <section className="w-full px-2 sm:px-4 py-4 sm:py-6 relative z-0 bg-transparent">
+        <div className="relative h-[65vh] md:h-[75vh] overflow-hidden rounded-3xl shadow-2xl bg-gradient-to-r from-gray-900 to-gray-800 transform hover:shadow-2xl transition-all duration-300">
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
               key={currentSlide}
@@ -96,17 +96,17 @@ const Home: React.FC = () => {
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-3xl transform hover:scale-105 transition-transform duration-3000"
                 style={{ 
                   backgroundImage: `url(${slides[currentSlide].image})`,
-                  filter: 'brightness(0.9)'
+                  filter: 'brightness(0.7) blur(1.5px)'
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent rounded-3xl backdrop-blur-[2px]" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-gray-900/70 to-transparent rounded-3xl backdrop-blur-[2.5px]" />
               
               <div className="container mx-auto px-4 h-full flex flex-col justify-center items-center text-center relative">
                 <motion.h1
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 drop-shadow-lg"
                 >
                   {slides[currentSlide].title}
                 </motion.h1>
@@ -114,7 +114,7 @@ const Home: React.FC = () => {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="text-lg sm:text-xl md:text-2xl text-white/90 mb-10 max-w-3xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]"
+                  className="text-lg sm:text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl drop-shadow"
                 >
                   {slides[currentSlide].subtitle}
                 </motion.p>
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.6 }}
                   whileHover={{ scale: 1.05, y: -4 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-white/90 backdrop-blur-sm text-gray-800 px-10 py-4 rounded-full text-lg font-medium hover:bg-white transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.2)] transform"
+                  className="bg-white/90 backdrop-blur-sm text-gray-900 px-10 py-4 rounded-full text-lg font-medium hover:bg-gray-200 transition-all duration-300 shadow-lg hover:shadow-xl transform"
                 >
                   Ver Colección
                 </motion.button>
@@ -135,13 +135,13 @@ const Home: React.FC = () => {
           {/* Navigation Arrows */}
           <div className="absolute inset-x-0 bottom-0 top-0 flex items-center justify-between px-6 sm:px-8 pointer-events-none">
             <button
-              className="p-4 rounded-full bg-white/30 backdrop-blur-sm text-gray-800 hover:bg-white/50 transition-all duration-300 pointer-events-auto shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] hover:-translate-x-1"
+              className="p-4 rounded-full bg-gray-800/60 backdrop-blur-sm text-white hover:bg-gray-700/80 transition-all duration-300 pointer-events-auto shadow-lg hover:shadow-xl hover:-translate-x-1"
               onClick={() => paginate(-1)}
             >
               <FiArrowLeft size={24} />
             </button>
             <button
-              className="p-4 rounded-full bg-white/30 backdrop-blur-sm text-gray-800 hover:bg-white/50 transition-all duration-300 pointer-events-auto shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)] hover:translate-x-1"
+              className="p-4 rounded-full bg-gray-800/60 backdrop-blur-sm text-white hover:bg-gray-700/80 transition-all duration-300 pointer-events-auto shadow-lg hover:shadow-xl hover:translate-x-1"
               onClick={() => paginate(1)}
             >
               <FiArrowRight size={24} />
@@ -157,10 +157,10 @@ const Home: React.FC = () => {
                   setDirection(index > currentSlide ? 1 : -1);
                   setCurrentSlide(index);
                 }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${
+                className={`w-2 h-2 rounded-full transition-all duration-300 shadow ${
                   index === currentSlide 
-                    ? 'bg-white w-8 shadow-[0_2px_8px_rgba(255,255,255,0.4)]' 
-                    : 'bg-white/50 hover:bg-white/75 hover:shadow-[0_2px_8px_rgba(255,255,255,0.2)]'
+                    ? 'bg-white w-8 shadow-lg' 
+                    : 'bg-gray-400/60 hover:bg-white/80 hover:shadow-lg'
                 }`}
               />
             ))}
@@ -168,10 +168,15 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Divider moderno entre slider y productos */}
+      <div className="flex justify-center my-8">
+        <div className="w-2/3 h-1 rounded-full bg-gradient-to-r from-gray-700 via-gray-500 to-gray-700 shadow-lg opacity-70" />
+      </div>
+
       {/* Featured Products */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+      <section className="py-16 w-full bg-transparent">
+        <div className="w-full px-4">
+          <h2 className="text-3xl font-bold text-center text-white mb-12">
             Productos Destacados
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -183,23 +188,23 @@ const Home: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
+      <section className="py-16 w-full bg-transparent">
+        <div className="w-full px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="p-6">
-              <div className="text-pink-500 text-4xl mb-4">🚚</div>
-              <h3 className="text-xl font-semibold mb-2">Envío Gratis</h3>
-              <p className="text-gray-600">En compras mayores a $50</p>
+              <div className="text-gray-200 text-4xl mb-4">🚚</div>
+              <h3 className="text-xl font-semibold mb-2 text-white">Envío Gratis</h3>
+              <p className="text-gray-300">En compras mayores a $50</p>
             </div>
             <div className="p-6">
-              <div className="text-pink-500 text-4xl mb-4">⭐</div>
-              <h3 className="text-xl font-semibold mb-2">Calidad Premium</h3>
-              <p className="text-gray-600">Materiales de primera calidad</p>
+              <div className="text-gray-200 text-4xl mb-4">⭐</div>
+              <h3 className="text-xl font-semibold mb-2 text-white">Calidad Premium</h3>
+              <p className="text-gray-300">Materiales de primera calidad</p>
             </div>
             <div className="p-6">
-              <div className="text-pink-500 text-4xl mb-4">💳</div>
-              <h3 className="text-xl font-semibold mb-2">Pago Seguro</h3>
-              <p className="text-gray-600">Múltiples métodos de pago</p>
+              <div className="text-gray-200 text-4xl mb-4">💳</div>
+              <h3 className="text-xl font-semibold mb-2 text-white">Pago Seguro</h3>
+              <p className="text-gray-300">Múltiples métodos de pago</p>
             </div>
           </div>
         </div>

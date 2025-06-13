@@ -23,6 +23,7 @@
     "firebase": "^11.9.1",
     "framer-motion": "^12.17.0",
     "lottie-react": "^2.4.1",
+    "lucide-react": "^0.514.0",
     "phaser": "^3.88.2",
     "postcss": "^8.5.4",
     "primeflex": "^4.0.0",
