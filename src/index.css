@@ -7,7 +7,7 @@
 
 @layer base {
   body {
-    @apply text-white;
+    @apply text-black;
     background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
   }
   .font-playfair {

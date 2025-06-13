@@ -19,8 +19,15 @@ export const mockProducts: Product[] = [
     ],
     category: 'cinturilla',
     images: {
-      main: '',
-      gallery: []
+      main: '/assets/cinturilla1.jpeg',
+      gallery: [
+        '/assets/cinturilla1.jpeg',
+        '/assets/cinturilla2.jpeg',
+        '/assets/cinturilla3.jpeg',
+        '/assets/cinturilla4.jpeg',
+        '/assets/cinturilla5.jpeg',
+        '/assets/cinturilla6.jpeg',
+      ]
     },
     stock: 15,
     isNew: true,
@@ -32,28 +39,39 @@ export const mockProducts: Product[] = [
   },
   {
     id: '2',
-    name: 'Body Shaper Control Total',
-    price: 65.00,
-    description: 'Body completo con efecto push-up y control abdominal.',
+    name: 'Cinturilla Látex Premium',
+    price: 42.00,
+    description: 'Cinturilla de látex con doble ajuste para máxima compresión y definición de cintura.',
     details: {
       stretch: true,
-      compression: 'medium',
-      material: ['Nylon', 'Spandex'],
-      careInstructions: ['Lavar a mano', 'Secar en sombra']
+      compression: 'maximum',
+      material: ['Látex', 'Algodón hipoalergénico'],
+      careInstructions: ['Lavar a mano', 'No usar secadora', 'No planchar']
     },
     sizes: ['S', 'M', 'L', 'XL'],
     colors: [
       { name: 'Negro', code: '#000000' },
-      { name: 'Nude', code: '#E6BEA5' }
+      { name: 'Beige', code: '#F5DEB3' }
     ],
-    category: 'body-shaper',
+    category: 'cinturilla',
     images: {
-      main: '',
-      gallery: []
+      main: '/assets/cinturilla5.jpeg',
+      gallery: [
+        '/assets/cinturilla1.jpeg',
+        '/assets/cinturilla2.jpeg',
+        '/assets/cinturilla3.jpeg',
+        '/assets/cinturilla4.jpeg',
+        '/assets/cinturilla5.jpeg',
+        '/assets/cinturilla6.jpeg',
+      ]
     },
-    stock: 10,
+    stock: 15,
     isNew: true,
-    features: ['Push-up natural', 'Control abdominal', 'Tirantes ajustables']
+    discount: {
+      percentage: 25,
+      endDate: '2024-05-01'
+    },
+    features: ['Doble ajuste', 'Material transpirable', 'Efecto reductor']
   },
   {
     id: '3',
@@ -73,8 +91,15 @@ export const mockProducts: Product[] = [
     ],
     category: 'short-control',
     images: {
-      main: '',
-      gallery: []
+      main: '/assets/cinturilla3.jpeg',
+      gallery: [
+        '/assets/cinturilla1.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla2.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla3.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla4.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla5.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla6.jpeg',
+      ]
     },
     stock: 20,
     isNew: false,
@@ -102,8 +127,15 @@ export const mockProducts: Product[] = [
     ],
     category: 'faja-completa',
     images: {
-      main: '',
-      gallery: []
+      main: '/assets/cinturilla4.jpeg',
+      gallery: [
+        '/assets/cinturilla1.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla2.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla3.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla4.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla5.jpeg',
+        '/assets/cinturillas-gscurvas/cinturilla6.jpeg',
+      ]
     },
     stock: 8,
     isNew: true,

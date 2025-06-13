@@ -176,7 +176,7 @@ const Home: React.FC = () => {
       {/* Featured Products */}
       <section className="py-16 w-full bg-transparent">
         <div className="w-full px-4">
-          <h2 className="text-3xl font-bold text-center text-white mb-12">
+          <h2 className="text-4xl font-black font-playfair text-center text-black mb-12 tracking-wide drop-shadow-sm">
             Productos Destacados
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

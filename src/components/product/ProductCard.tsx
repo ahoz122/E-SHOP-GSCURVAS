@@ -21,6 +21,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     setShowOptions(false);
   };
 
+  const CategroriaCinturilla = product.category === 'cinturilla';
+
   return (
     <motion.div
       className="group relative"
@@ -33,14 +35,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           Nuevo
         </span>
       )}
-      
+
       {product.discount && (
         <span className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 text-xs rounded-full z-10">
           -{product.discount.percentage}%
         </span>
       )}
 
-      <div className="relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-white rounded-lg">
+      <div className="group relative overflow-hidden aspect-[3/4] bg-gradient-to-br from-pink-50 to-white rounded-2xl shadow-md">
         {product.images.main ? (
           <img
             src={product.images.main}
@@ -54,12 +56,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <ShapewearIcon className="w-full h-full max-w-[200px]" />
+              <ShapewearIcon className="w-full h-full max-w-[150px] text-gray-400" />
             </motion.div>
           </div>
         )}
-        <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
-        
+
+        {/* Overlay hover effect */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 pointer-events-none" />
+
+        {/* Bottom action buttons */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <button
             onClick={() => setShowOptions(true)}
@@ -72,10 +77,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
 
+
+
+
+
+
       <div className="mt-4 px-2">
         <h3 className="text-lg font-medium text-gray-800">{product.name}</h3>
         <p className="text-sm text-gray-500 mt-1">{product.details.compression} Compresión</p>
-        
+
         <div className="flex items-center justify-between mt-2">
           <div className="flex items-center gap-2">
             {product.discount ? (
@@ -93,7 +103,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </span>
             )}
           </div>
-          
+
           <button className="p-2 text-gray-400 hover:text-pink-500 transition-colors">
             <FiHeart size={20} />
           </button>
@@ -123,11 +133,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`px-3 py-1 rounded-full border ${
-                      selectedSize === size
+                    className={`px-3 py-1 rounded-full border ${selectedSize === size
                         ? 'border-pink-500 text-pink-500'
                         : 'border-gray-300 text-gray-600 hover:border-gray-400'
-                    }`}
+                      }`}
                   >
                     {size}
                   </button>
@@ -144,11 +153,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                   <button
                     key={color.name}
                     onClick={() => setSelectedColor(color.name)}
-                    className={`w-8 h-8 rounded-full border-2 ${
-                      selectedColor === color.name
+                    className={`w-8 h-8 rounded-full border-2 ${selectedColor === color.name
                         ? 'border-pink-500'
                         : 'border-transparent'
-                    }`}
+                      }`}
                     style={{ backgroundColor: color.code }}
                     title={color.name}
                   />

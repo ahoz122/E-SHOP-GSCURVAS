@@ -41,21 +41,21 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
     if (cart.length === 0) return;
 
     let message = "Hola! Me gustaría realizar este pedido:\n";
-    
+
     cart.forEach((item) => {
       message += `*${item.product.name}*\n`;
-      
+
       // Add variant details if available
       if (Object.keys(item.details).length > 0) {
         Object.entries(item.details).forEach(([type, value]) => {
           message += `- ${type}: ${value}\n`;
         });
       }
-      
+
       message += `- Cantidad: ${item.quantity}\n`;
       message += `- Subtotal: $${(item.price * item.quantity).toFixed(2)}\n`;
     });
-    
+
     message += `*TOTAL: $${calculateTotal()}*`;
 
     const whatsappLink = getWhatsAppLink("593982891603", message);
@@ -90,6 +90,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onClose={onClose}
       header="Carrito"
+    
       showCloseButton
       modalConfig={{ height: "auto" }}
     >
@@ -122,12 +123,12 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                           whileHover={{ scale: 1.05 }}
                         >
                           <img
-                          alt={item.product.name || "Producto"}
-                          src={
-                            item.image ||
-                            "https://www.creativefabrica.com/wp-content/uploads/2021/04/05/Photo-Image-Icon-Graphics-10388619-1.jpg"
-                          }
-                          className="w-full h-full object-contain rounded-lg"
+                            alt={item.product.name || "Producto"}
+                            src={
+                              item.image ||
+                              "https://www.creativefabrica.com/wp-content/uploads/2021/04/05/Photo-Image-Icon-Graphics-10388619-1.jpg"
+                            }
+                            className="w-full h-full object-contain rounded-lg"
                           />
                         </motion.div>
 
@@ -210,13 +211,14 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
               <div className="flex flex-col gap-3">
                 <div className="grid grid-cols-2 gap-3">
                   <motion.button
-                    className="px-4 py-2.5 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors text-gray-700 text-sm font-medium"
+                    className="px-4 py-2.5 bg-gray-700 text-white rounded-md hover:bg-red-600 transition-colors text-sm font-medium"
                     onClick={clearCart}
-                    whileHover={{ backgroundColor: "#e5e7eb" }}
+                    whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.97 }}
                   >
                     Limpiar
                   </motion.button>
+
                   <motion.button
                     className="px-4 py-2.5 bg-[#155b51] rounded-md hover:bg-[#124a42] transition-colors text-white flex items-center justify-center gap-2 text-sm font-medium"
                     onClick={handleWhatsappCheckout}
